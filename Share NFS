@@ -1,0 +1,46 @@
+Bash
+sudo yum install nfs-utils rpcbind
+Use code with caution.
+
+Configure NFS on the sharing machine:
+Export the shared folder:
+sudo nano /etc/exports
+Add a line like this:
+/path/to/shared/folder <client_ip>(rw,sync)
+Replace <client_ip> with the IP address of the client machine.
+Restart NFS:
+Bash
+sudo systemctl restart nfs-server
+Use code with caution.
+
+Configure NFS on the client machine:
+showmount -e ip shard server for list all shared 
+Mount the shared folder:
+Bash
+sudo mount -t nfs <server_ip>:/path/to/shared/folder /mount_point
+Use code with caution.
+
+Replace <server_ip> with the IP address of the sharing machine, and mount_point with the desired mount point on the client machine.
+3. Using SSHFS:
+
+Install SSHFS on both machines:
+Bash
+sudo yum install sshfs
+Use code with caution.
+
+Create a public-private key pair on the sharing machine:
+Bash
+ssh-keygen -t rsa
+Use code with caution.
+
+Copy the public key to the authorized_keys file on the client machine:
+Bash
+scp ~/.ssh/id_rsa.pub user@client_ip:~/.ssh/authorized_keys
+Use code with caution.
+
+Mount the shared folder on the client machine:
+Bash
+sudo mount -t sshfs user@server_ip:/path/to/shared/folder /mount_point
+Use code with caution.
+
+Replace user with the username on the sharing machine, server_ip with the IP address of the sharing machine, and mount_point with the desired mount point on the client machine.
